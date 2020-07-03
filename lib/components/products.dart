@@ -1,3 +1,4 @@
+import 'package:e_shop/pages/product_details.dart';
 import 'package:flutter/material.dart';
 
 class Products extends StatefulWidget {
@@ -28,7 +29,7 @@ class _ProductsState extends State<Products> {
             SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
         itemCount: products_list.length,
         itemBuilder: (BuildContext context, int index) {
-          return Single_product(
+          return Single_Product(
             product_name: products_list[index]['name'],
             product_picture: products_list[index]['picture'],
             product_old_price: products_list[index]['old_price'],
@@ -38,8 +39,8 @@ class _ProductsState extends State<Products> {
   }
 }
 
-class Single_product extends StatelessWidget {
-  Single_product(
+class Single_Product extends StatelessWidget {
+  Single_Product(
       {this.product_name,
       this.product_old_price,
       this.product_picture,
@@ -57,26 +58,36 @@ class Single_product extends StatelessWidget {
         tag: product_name,
         child: Material(
           child: InkWell(
-            onTap: (){},
+            onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => ProductDetails(
+//                  Passing the data of Product to ProductDetails
+                  productdetails_name: product_name,
+                  productdetails_old_rice: product_old_price,
+                  productdetails_picture: product_picture,
+                  productdetails_price: product_price,
+                ))),
             child: GridTile(
               footer: Container(
                 color: Colors.white70,
                 child: ListTile(
                   leading: Text(
                     product_name,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  title: Text(
+                    "\₹$product_price",
                     style: TextStyle(
-                        fontWeight: FontWeight.bold),
+                      fontWeight: FontWeight.w700,
+                      color: Colors.red,
+                    ),
                   ),
-                  title: Text("\₹$product_price",style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    color: Colors.red,
-                  ),
-                  ),
-                  subtitle: Text("\₹$product_old_price",style: TextStyle(
-                    fontWeight: FontWeight.w800,
-                    color: Colors.black,
-                    decoration: TextDecoration.lineThrough,
-                  ),
+                  subtitle: Text(
+                    "\₹$product_old_price",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w800,
+                      color: Colors.black,
+                      decoration: TextDecoration.lineThrough,
+                    ),
                   ),
                 ),
               ),
